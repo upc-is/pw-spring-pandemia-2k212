@@ -6,7 +6,7 @@
 
   <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" >
 
-  <title>Hello, world!</title>
+  <title>Countries</title>
 </head>
 <body>
   <header>
@@ -48,6 +48,20 @@
 	</nav>
   </header>
   <main>
+  
+  	<section>
+  	
+  		<div class="card" style="width: 18rem;"
+  			th:each="country : ${countries}">
+		  <div class="card-body">
+		    <h5 class="card-title" th:text="${country.name}">Name</h5>
+		    <p class="card-text">Región: <span th:text="${country.region.name}"></span></p>
+		    <a href="#" class="btn btn-primary">Edit</a>
+		    <a href="#" class="btn btn-warning">Delete</a>		    
+		  </div>
+		</div>
+  	
+  	</section>
   
   </main>
   <footer>
