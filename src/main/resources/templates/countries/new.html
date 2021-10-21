@@ -6,7 +6,7 @@
 
   <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" >
 
-  <title>Countries</title>
+  <title>Edit Country</title>
 </head>
 <body>
   <header>
@@ -50,14 +50,30 @@
   <main>
   
   	<section>
-  		<a th:href="@{/countries/new}" class="btn btn-success">New Country</a>
-  		
-  		<div class="card" style="width: 18rem;" th:each="country : ${countries}">
+  	
+  		<div class="card" style="width: 18rem;">
 		  <div class="card-body">
-		    <h5 class="card-title" th:text="${country.name}">Name</h5>
-		    <p class="card-text">Región: <span th:text="${country.region.name}"></span></p>
-		    <a th:href="${'/countries/' + country.id + '/edit'}" class="btn btn-primary">Edit</a>
-		    <a th:href="${'/countries/' + country.id + '/del'}" class="btn btn-warning">Delete</a>		    
+		    
+		    <form th:action="@{/countries/saveNew}" th:object="${country}" method="post">
+			  <div class="mb-3">
+			    <label for="id" class="form-label">Id</label>
+			    <input type="text" class="form-control" th:field="*{id}">			    
+			  </div>
+			  <div class="mb-3">
+			    <label for="name" class="form-label">Name</label>
+			    <input type="text" class="form-control" th:field="*{name}">			    
+			  </div>
+			  <div class="mb-3">
+			    <label for="region" class="form-label">Región</label>
+			    <select class="form-select" th:field="*{region}">
+				  <option th:each="region : ${regions}" 
+				  		th:value="${region.id}" th:text="${region.name}">One</option>
+				</select>		    
+			  </div>
+			  <button type="submit" class="btn btn-success">Save</button>
+			  <a th:href="@{/countries}" class="btn btn-primary">Cancel</a>
+			</form>
+		    		    
 		  </div>
 		</div>
   	

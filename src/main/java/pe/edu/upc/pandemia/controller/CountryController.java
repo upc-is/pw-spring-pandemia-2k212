@@ -41,6 +41,32 @@ public class CountryController {
 		return "countries/list";
 	}
 	
+	@GetMapping("new")
+	public String newCountry(Model model) {
+		try {
+			List<Region> regions = regionService.getAll();
+			model.addAttribute("regions", regions);
+			model.addAttribute("country", new Country());			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}		
+		return "countries/new";
+	}
+	
+	@PostMapping("saveNew")
+	public String saveNew(Model model, @ModelAttribute("country") Country country ) {
+		System.out.println(country.getId());
+		System.out.println(country.getName());
+		System.out.println(country.getRegion().getName());
+		try {
+			Country countrySaved = countryService.create(country);		
+			model.addAttribute("country", countrySaved);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return "countries/view";
+	}
+	
 	@GetMapping("{id}/edit")
 	public String edit(Model model, @PathVariable("id") String id) {
 		try {
@@ -70,6 +96,21 @@ public class CountryController {
 			// TODO: handle exception
 		}
 		return "countries/view";
+	}
+	
+	@GetMapping("{id}/del")
+	public String delete(Model model, @PathVariable("id") String id) {
+		try {
+			if(countryService.existsById(id)) {
+				countryService.deleteById(id);
+			} else {
+				return "redirect:/countries";
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return "redirect:/countries";
 	}
 	
 	
