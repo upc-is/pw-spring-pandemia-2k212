@@ -22,6 +22,14 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "Employees", 
@@ -34,18 +42,31 @@ public class Employee {	// Upper Camel case
 	@Column(name = "employee_id", columnDefinition = "NUMERIC(6)")
 	private Integer id;
 	
+	@Size(max = 20)
 	@Column(name = "first_name", length = 20)
 	private String firstName; // Lower camel case
 	
+	@NotNull
+	@NotBlank
+	@Size(max = 25)
 	@Column(name = "last_name", length = 25, nullable = false)
 	private String lastName;
 	
+	@NotNull
+	@NotBlank
+	@Size(max = 25)
+	@Email
 	@Column(name = "email", length = 25, nullable = false)
 	private String email;
 	
+	@NotNull
+	@NotBlank
+	@Size(max = 20)
 	@Column(name = "phone_number", length = 20, nullable = false)
 	private String phoneNumber;
 	
+	@NotNull
+	@NotBlank
 	@Column(name = "hire_date")
 	@Temporal(TemporalType.DATE)
 	private Date hireDate;
@@ -54,9 +75,13 @@ public class Employee {	// Upper Camel case
 	@JoinColumn(name = "job_id", nullable = false)
 	private Job job;
 	
+	@Max(value = 999999)
+	@Min(1)
 	@Column(name = "salary", columnDefinition = "DECIMAL(8,2)")
 	private Float salary;
 	
+	@DecimalMax(value = "0.99")
+	@DecimalMin("0.01")
 	@Column(name = "commission_pct", columnDefinition = "DECIMAL(2,2)")
 	private Float commissionPct;
 	

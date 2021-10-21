@@ -9,20 +9,33 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "Jobs")
 public class Job {	// Perfil/Rol/Puesto laboral
+	@NotBlank
 	@Id
 	@Column(name = "job_id", length = 10)
 	private String id;
 	
+	@NotNull
+	@NotBlank
+	@Size(max = 35)
 	@Column(name = "job_title", length = 35, nullable = false)
 	private String title;
 	
+	@Max(value = 999999)
+	@Min(value = 1)
 	@Column(name = "min_salary", columnDefinition = "NUMERIC(6)")
 	private Integer minSalary;
 	
+	@Max(value = 999999)
+	@Min(value = 1)
 	@Column(name = "max_salary", columnDefinition = "NUMERIC(6)")
 	private Integer maxSalary; 
 	

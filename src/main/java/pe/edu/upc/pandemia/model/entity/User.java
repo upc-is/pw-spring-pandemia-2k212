@@ -14,6 +14,9 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "users", 
@@ -23,12 +26,19 @@ public class User {
 	@Id
 	private Integer id;
 	
+	@NotNull
+	@NotBlank
+	@Size(max = 30)
 	@Column(name = "username", length = 30, nullable = false)
 	private String username;
 	
+	@NotNull
+	@NotBlank
+	@Size(max = 60)
 	@Column(name = "password", length = 60, nullable = false)
 	private String password;
 	
+	@NotNull
 	@Column(name = "enable")
 	private boolean enable;
 	

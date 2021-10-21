@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "job_history", 
@@ -25,11 +26,13 @@ public class JobHistory {	// Upper Camel Case
 	@JoinColumn(name = "employee_id", nullable = false)
 	private Employee employee;
 	
+	@NotNull
 	@Id
 	@Column(name = "start_date")
 	@Temporal(TemporalType.DATE)
 	private Date startDate;
 	
+	@NotNull
 	@Column(name = "end_date")
 	@Temporal(TemporalType.DATE)
 	private Date endDate;

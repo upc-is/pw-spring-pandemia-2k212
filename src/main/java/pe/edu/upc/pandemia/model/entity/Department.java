@@ -15,6 +15,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "Departments")
@@ -25,6 +28,7 @@ public class Department {
 	@Column(name = "department_id", columnDefinition = "NUMERIC(4)")	// PostgreSQL
 	private Integer id;
 	
+	@Size(max = 30)
 	@Column(name = "department_name", length = 30)
 	private String name;
 

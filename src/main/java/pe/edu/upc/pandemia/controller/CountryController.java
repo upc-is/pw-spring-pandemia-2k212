@@ -3,9 +3,12 @@ package pe.edu.upc.pandemia.controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -54,7 +57,12 @@ public class CountryController {
 	}
 	
 	@PostMapping("saveNew")
-	public String saveNew(Model model, @ModelAttribute("country") Country country ) {
+	public String saveNew(Model model, @Valid @ModelAttribute("country") Country country, 
+			BindingResult result) {
+		if(result.hasErrors()) {
+			
+		}
+		
 		System.out.println(country.getId());
 		System.out.println(country.getName());
 		System.out.println(country.getRegion().getName());
@@ -89,7 +97,7 @@ public class CountryController {
 	public String saveEdit(Model model, @ModelAttribute("country") Country country ) {
 		System.out.println(country.getId());
 		System.out.println(country.getName());
-		try {
+		try {				
 			Country countrySaved = countryService.update(country);		
 			model.addAttribute("country", countrySaved);
 		} catch (Exception e) {

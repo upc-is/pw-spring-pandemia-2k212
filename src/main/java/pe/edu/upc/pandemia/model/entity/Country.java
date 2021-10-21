@@ -12,26 +12,32 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity 
 @Table(name = "Countries")
 public class Country {
+	@NotBlank(message = "El Id debe contener datos")
+	@Size(max = 2, message = "El tamano máximo del Id debe ser 2")
 	@Id 
 	@Column(name = "country_id", length = 2, nullable = false)
 	private String id;
 	
+	@NotNull(message = "El name debe contener valor")
+	@NotBlank(message = "El name debe contener datos")
+	@Size(max = 40, message = "El tamano máximo del name debe ser 40")
 	@Column(name = "country_name", length = 40)
 	private String name;
 	
+	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "region_id", nullable = false)	// Foreing Key
 	private Region region; // Region_Id
 	
 	@OneToMany(mappedBy = "country", fetch = FetchType.LAZY)
 	private List<Location> locations;
-	
-	@Transient
-	private int dato;
 	
 	// -- Constructor, Getter y Setter
 	public Country() {

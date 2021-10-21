@@ -12,6 +12,9 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "languages")
@@ -22,7 +25,10 @@ public class Language {
 	@Column(name = "language_id", columnDefinition = "NUMERIC(2)")
 	private Integer id;
 	
-	@Column(name = "language_name", length = 20)
+	@NotNull
+	@NotBlank
+	@Size(max = 20)
+	@Column(name = "language_name", length = 20, nullable = false)
 	private String name;
 	
 	@ManyToMany(mappedBy = "languages", fetch = FetchType.LAZY)

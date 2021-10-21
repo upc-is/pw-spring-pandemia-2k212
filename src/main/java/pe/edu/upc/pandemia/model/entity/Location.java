@@ -14,6 +14,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "Locations", 
@@ -26,18 +29,25 @@ public class Location {
 	@Column(name = "location_id", columnDefinition = "NUMERIC(4)")
 	private Integer id;
 	
+	@Size(max = 40)
 	@Column(name = "street_address", length = 40)
 	private String streetAddress;
 	
+	@Size(max = 12)
 	@Column(name = "postal_code", length = 12)
 	private String postalCode;
 	
+	@NotNull
+	@NotBlank
+	@Size(max = 30)
 	@Column(name = "city", length = 30, nullable = false)
 	private String city;
 	
+	@Size(max = 25)
 	@Column(name = "state_province", length = 25)
 	private String stateProvince;
 	
+	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "country_id", nullable = false)
 	private Country country;	// Country_id
