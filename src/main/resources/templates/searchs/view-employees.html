@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: frag-head(~{::title})">
+  <title>Employees - Human Resource</title>
+</head>
+<body>
+  <header th:replace="layout/layout :: frag-header">  	
+  </header>
+  <main>  
+  	<section>
+  		
+  		<p th:each="employee : ${employees}">
+  			<span th:text="${employee.lastName}">Last</span>,
+  			<span th:text="${employee.firstName}">First</span> 
+  		</p>
+  	
+  	</section>  
+  </main>
+  <footer th:replace="layout/layout :: frag-footer"></footer>
+</body>
+</html>
