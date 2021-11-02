@@ -9,10 +9,21 @@
   <main>  
   	<section>
   		
-  		<p th:each="employee : ${employees}">
-  			<span th:text="${employee.lastName}">Last</span>,
-  			<span th:text="${employee.firstName}">First</span> 
-  		</p>
+  		<div class="row">
+		  <div class="col-xs-6 col-sm-4 col-md-3 mb-3" th:each="employee : ${employees}">
+		    <div class="card">
+		      <img th:src="${'/images/employee' + employee.id + '.jpg'}" class="card-img-top" alt="employee">
+		      <div class="card-body">
+		        <h5 class="card-title" th:text="${employee.lastName + ' ' + employee.firstName }">Special title treatment</h5>
+		        <p class="card-text">
+		        	<span th:text="${employee.job.title}"></span><br>
+		        	<span th:text="${employee.manager.lastName}"></span>
+		        </p>
+		        <a th:href="${'/employees/view/' + employee.id}" class="btn btn-success">Mas Información</a>
+		      </div>
+		    </div>
+		  </div>
+		</div>
   	
   	</section>  
   </main>

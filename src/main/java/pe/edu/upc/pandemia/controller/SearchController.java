@@ -27,7 +27,7 @@ public class SearchController {
 		List<Employee> employees = new ArrayList<>();
 		
 		try {
-			employees = employeeService.findByLastName(employeeSearch.getLastName());
+			employees = employeeService.findByLastNameContaining(employeeSearch.getLastName());
 		} catch (Exception e) {
 			// TODO: handle exception
 		}

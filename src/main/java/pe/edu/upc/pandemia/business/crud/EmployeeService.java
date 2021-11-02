@@ -7,4 +7,5 @@ import pe.edu.upc.pandemia.model.entity.Employee;
 public interface EmployeeService extends CrudService<Employee, Integer> {
 	List<Employee> findByLastNameAndFirstName(String lastName, String firstName) throws Exception;
 	List<Employee> findByLastName(String lastName) throws Exception;
+	List<Employee> findByLastNameContaining(String lastName) throws Exception;
 }

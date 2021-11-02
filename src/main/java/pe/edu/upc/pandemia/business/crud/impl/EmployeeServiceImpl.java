@@ -31,4 +31,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return employeeRepository.findByLastName(lastName);
 	}
 
+	@Override
+	public List<Employee> findByLastNameContaining(String lastName) throws Exception {
+		return employeeRepository.findByLastNameContaining(lastName);
+	}
+	
+	
 }
