@@ -3,36 +3,20 @@ package pe.edu.upc.pandemia.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import pe.edu.upc.pandemia.utils.EmployeeSearch;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/upgrade")
 @SessionAttributes("{employeeSearch}")
-public class FrontController {
+public class UpgradeController {
 
 	@GetMapping
-	public String home(Model model) {
-		EmployeeSearch employeeSearch = new EmployeeSearch();
+	public String home(Model model, @ModelAttribute("employeeSearch") EmployeeSearch employeeSearch) {
 		model.addAttribute("employeeSearch", employeeSearch);
-		return "home";
+		return "upgrade/index";
 	}
-	
-	@GetMapping("login")	// request
-	public String login() {
-		return "login";
-	}
-	
-	@GetMapping("inicio2")	// request
-	public String inicio2() {
-		return "ejemplo2";
-	}
-	
-	@GetMapping("inicio2-sub")	// request
-	public String inicio3() {
-		return "ejemplo2";
-	}
-	
 }

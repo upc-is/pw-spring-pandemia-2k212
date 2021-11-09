@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" 
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+	<meta charset="utf-8">
+  	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login Page</title>
+    <link rel="stylesheet" type="text/css" href="css/login.css">
+</head>
+<body>
+<div class="form">
+    <p>Login</p>
+    <form th:action="@{/signin}" method="post">
+        <input type="text" name="username" id="username" placeholder="username">
+        <input type="password" name="password" id="password" placeholder="password">
+        <button type="submit">login</button>
+        <p class="message">Not registered? <a href="#">Create an account</a></p>
+    </form>
+</div>
+</body>
+</html>

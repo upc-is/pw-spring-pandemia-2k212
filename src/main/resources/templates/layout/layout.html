@@ -1,5 +1,6 @@
 <!doctype html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" 
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:fragment="frag-head(title)">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -24,13 +25,16 @@
 	        <li class="nav-item">
 	          <a class="nav-link active" aria-current="page" th:href="@{/}">Home</a>
 	        </li> 
-	        <li class="nav-item">
-	          <a class="nav-link" href="#">Hiring</a>
+	        <li sec:authorize="hasRole('ROLE_EMPLOYEE')" class="nav-item">
+	          <a class="nav-link" th:href="@{/apply}">Apply</a>
 	        </li>
-	        <li class="nav-item">
-	          <a class="nav-link" href="#">Upgrade</a>
+	        <li sec:authorize="hasAnyRole('ROLE_EMPLOYEE','ROLE_HUMANRESOURCE')" class="nav-item" >
+	          <a class="nav-link" th:href="@{/hiring}">Hiring</a>
 	        </li>
-	        <li class="nav-item dropdown">
+	        <li sec:authorize="hasRole('ROLE_HUMANRESOURCE')" class="nav-item">
+	          <a class="nav-link" th:href="@{/upgrade}">Upgrade</a>
+	        </li>
+	        <li sec:authorize="hasRole('ROLE_HUMANRESOURCE')" class="nav-item dropdown" >
 	          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 	            CRUD
 	          </a>
@@ -44,19 +48,17 @@
 	            <li><a class="dropdown-item" href="#">Employees</a></li>
 	          </ul>
 	        </li>
-	        <li class="nav-item">
-	          <a class="nav-link disabled">Disabled</a>
-	        </li>
-	        <form class="d-flex" th:action="@{/search/employee}" th:object="${employeeSearch}" method="post">
-	        	<input class="form-control me-2" type="search" placeholder="Search employee" aria-label="Search"
-	        		th:field="*{lastName}">
-		        <button class="btn btn-light" type="submit"><i class="fas fa-search"></i></button>
-		    </form>
+	        
 	      </ul>
 	      
-	      <a href="#" class="btn btn-warning mx-1">Sign In</a> 
-	      <a href="#" class="btn btn-warning mx-1">Sign Up</a>
-	      <a th:href="@{/logout}" class="btn btn-warning mx-1">Sign Out</a>
+	      <form sec:authorize="isAuthenticated()" class="d-flex" th:action="@{/search/employee}" th:object="${employeeSearch}" method="post">
+        	<input class="form-control me-2" type="search" placeholder="Search employee" aria-label="Search"
+        		th:field="*{lastName}">
+	        <button class="btn btn-light" type="submit"><i class="fas fa-search"></i></button>
+	      </form>
+	      <a sec:authorize="isAnonymous()" th:href="@{/login}" class="btn btn-success mx-1">Sign In</a> 
+	      <a sec:authorize="isAnonymous()" href="#" class="btn btn-primary mx-1">Sign Up</a>
+	      <a sec:authorize="isAuthenticated()" th:href="@{/logout}" class="btn btn-danger mx-1">Logout</a>
 	      
 	    </div>
 	  </div>

@@ -20,10 +20,11 @@ import pe.edu.upc.pandemia.business.crud.CountryService;
 import pe.edu.upc.pandemia.business.crud.RegionService;
 import pe.edu.upc.pandemia.model.entity.Country;
 import pe.edu.upc.pandemia.model.entity.Region;
+import pe.edu.upc.pandemia.utils.EmployeeSearch;
 
 @Controller
 @RequestMapping("/countries")
-@SessionAttributes("country")
+@SessionAttributes("{employeeSearch, country}")
 public class CountryController {
 
 	@Autowired
@@ -33,10 +34,11 @@ public class CountryController {
 	private RegionService regionService;
 	
 	@GetMapping
-	public String list(Model model) {
+	public String list(Model model, @ModelAttribute("employeeSearch") EmployeeSearch employeeSearch) {
 		try {
 			List<Country> countries = countryService.getAll();
 			model.addAttribute("countries", countries);
+			model.addAttribute("employeeSearch", employeeSearch);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -45,11 +47,12 @@ public class CountryController {
 	}
 	
 	@GetMapping("new")
-	public String newCountry(Model model) {
+	public String newCountry(Model model, @ModelAttribute("employeeSearch") EmployeeSearch employeeSearch) {
 		try {
 			List<Region> regions = regionService.getAll();
 			model.addAttribute("regions", regions);
-			model.addAttribute("country", new Country());			
+			model.addAttribute("country", new Country());	
+			model.addAttribute("employeeSearch", employeeSearch);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}		
@@ -57,18 +60,16 @@ public class CountryController {
 	}
 	
 	@PostMapping("saveNew")
-	public String saveNew(Model model, @Valid @ModelAttribute("country") Country country, 
+	public String saveNew(Model model, @ModelAttribute("employeeSearch") EmployeeSearch employeeSearch, @Valid @ModelAttribute("country") Country country, 
 			BindingResult result) {
 		if(result.hasErrors()) {
 			
 		}
-		
-		System.out.println(country.getId());
-		System.out.println(country.getName());
-		System.out.println(country.getRegion().getName());
+
 		try {
 			Country countrySaved = countryService.create(country);		
 			model.addAttribute("country", countrySaved);
+			model.addAttribute("employeeSearch", employeeSearch);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -76,13 +77,14 @@ public class CountryController {
 	}
 	
 	@GetMapping("{id}/edit")
-	public String edit(Model model, @PathVariable("id") String id) {
+	public String edit(Model model, @ModelAttribute("employeeSearch") EmployeeSearch employeeSearch, @PathVariable("id") String id) {
 		try {
 			if(countryService.existsById(id)) {
 				Optional<Country> optional = countryService.findById(id);
 				List<Region> regions = regionService.getAll();
 				model.addAttribute("country", optional.get());
 				model.addAttribute("regions", regions);
+				model.addAttribute("employeeSearch", employeeSearch);
 			} else {
 				return "redirect:/countries";
 			}
@@ -94,12 +96,11 @@ public class CountryController {
 	}
 	
 	@PostMapping("saveedit")
-	public String saveEdit(Model model, @ModelAttribute("country") Country country ) {
-		System.out.println(country.getId());
-		System.out.println(country.getName());
+	public String saveEdit(Model model, @ModelAttribute("employeeSearch") EmployeeSearch employeeSearch, @ModelAttribute("country") Country country ) {
 		try {				
 			Country countrySaved = countryService.update(country);		
 			model.addAttribute("country", countrySaved);
+			model.addAttribute("employeeSearch", employeeSearch);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -107,7 +108,7 @@ public class CountryController {
 	}
 	
 	@GetMapping("{id}/del")
-	public String delete(Model model, @PathVariable("id") String id) {
+	public String delete(Model model, @ModelAttribute("employeeSearch") EmployeeSearch employeeSearch, @PathVariable("id") String id) {
 		try {
 			if(countryService.existsById(id)) {
 				countryService.deleteById(id);

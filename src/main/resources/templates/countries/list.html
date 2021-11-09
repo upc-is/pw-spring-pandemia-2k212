@@ -1,5 +1,6 @@
 <!doctype html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" 
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="layout/layout :: frag-head(~{::title})">
   <title>Countries - HR</title>
 </head>
@@ -22,7 +23,7 @@
   	
   	</section>
   
-  </main>
+   </main>
   <footer th:replace="layout/layout :: frag-footer"></footer>
 </body>
 </html>

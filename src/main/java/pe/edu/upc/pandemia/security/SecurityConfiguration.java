@@ -10,8 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import com.sun.org.apache.xpath.internal.operations.And;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -42,9 +41,21 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 			.authorizeRequests()
-				.antMatchers("/").hasRole("EMPLOYEE")
+				.antMatchers("/").permitAll()
+				.antMatchers("/apply/**").hasRole("EMPLOYEE")
+				.antMatchers("/hiring/**").hasAnyRole("EMPLOYEE", "HUMANRESOURCE")
+				.antMatchers("/upgrade/**").hasRole("HUMANRESOURCE")
+				.antMatchers("/search/**").authenticated()
 			.and()
-			.formLogin();
+			.formLogin()
+				.loginProcessingUrl("/signin")
+				.loginPage("/login").permitAll()
+				.usernameParameter("username")
+				.passwordParameter("password")
+			.and()
+			.logout()
+				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+				.logoutSuccessUrl("/");
 	}	
 	
 	
