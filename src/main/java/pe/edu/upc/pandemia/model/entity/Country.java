@@ -16,6 +16,9 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity 
 @Table(name = "Countries")
 public class Country {
@@ -31,11 +34,13 @@ public class Country {
 	@Column(name = "country_name", length = 40)
 	private String name;
 	
+	@JsonIgnoreProperties("contries")
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "region_id", nullable = false)	// Foreing Key
 	private Region region; // Region_Id
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "country", fetch = FetchType.LAZY)
 	private List<Location> locations;
 	
