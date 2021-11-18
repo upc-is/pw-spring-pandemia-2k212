@@ -39,13 +39,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http
+		http.csrf().disable()
 			.authorizeRequests()
 				.antMatchers("/").permitAll()
 				.antMatchers("/apply/**").hasRole("EMPLOYEE")
 				.antMatchers("/hiring/**").hasAnyRole("EMPLOYEE", "HUMANRESOURCE")
 				.antMatchers("/upgrade/**").hasRole("HUMANRESOURCE")
 				.antMatchers("/search/**").authenticated()
+				.antMatchers("/api/v1/**").permitAll()
 			.and()
 			.formLogin()
 				.loginProcessingUrl("/signin")
